@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ming.hospital.dao.DoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.ming.hospital.pojo.Doctor" >
+    <id column="did" property="did" jdbcType="BIGINT" />
+    <result column="dname" property="dname" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="hid" property="hid" jdbcType="BIGINT" />
+    <result column="score" property="score" jdbcType="REAL" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="deid" property="deid" jdbcType="BIGINT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="surgeryWeek" property="surgeryweek" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="resultMapDoctor" type="com.ming.hospital.pojo.Doctor">
+    <id column="did" property="did" />
+    <result  column="dname" property="dname"/>
+    <result  column="gender" property="gender"/>
+    <result  column="score" property="score"/>
+    <result  column="grade" property="grade"/>
+    <result  column="description" property="description"/>
+    <result  column="image" property="image"/>
+    <result  column="surgeryWeek" property="surgeryweek"/>
+    <association property="hospital" javaType="hospital">
+      <id property="hid" column="hid"></id>
+      <result property="hname" column="hname"></result>
+      <result property="hphone" column="hphone"></result>
+      <result property="address" column="address"></result>
+      <result property="score" column="score"></result>
+      <result property="grade" column="grade"></result>
+      <result property="description" column="description"></result>
+      <result property="image" column="image"></result>
+    </association>
+    <association property="dept" javaType="dept">
+      <id property="deid" column="deid"></id>
+      <result property="degrade" column="degrade"></result>
+      <result property="dename" column="dename" ></result>
+    </association>
+  </resultMap>
+
+  <select  id = "getListByTop4" resultMap="resultMapDoctor" >
+    select * from doctor d JOIN  hospital h on d.hid = h.hid join dept de on de.deid = d.deid
+    order by d.score ;
+  </select>
+
+  <select id="selectById" resultMap="resultMapDoctor" parameterType="Long">
+    select * from doctor d JOIN  hospital h on d.hid = h.hid join dept de on de.deid = d.deid
+    where d.did = #{did};
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ming.hospital.pojo.Doctor" >
+    select * from doctor;
+  </select>
+</mapper>

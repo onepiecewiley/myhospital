@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ming.hospital.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.ming.hospital.pojo.User" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="user" property="user" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="CHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <update id="update" parameterType="com.ming.hospital.pojo.User" >
+      update user set salt=#{salt} where user=#{user};
+  </update>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ming.hospital.pojo.User" >
+    select * from user where user=#{user};
+  </select>
+
+  <insert id="insert" parameterType="com.ming.hospital.pojo.User" >
+    insert into user (uid, user, pwd, 
+      name, gender, email, 
+      phone, createTime,salt)
+    values (#{uid,jdbcType=BIGINT}, #{user,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=CHAR}, #{createtime,jdbcType=TIMESTAMP},#{salt})
+  </insert>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+      select * from user;
+    </select>
+  <select id="selectByUser" resultMap="BaseResultMap">
+    select * from user where user=#{user};
+  </select>
+</mapper>

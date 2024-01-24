@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <context:component-scan base-package="com.ming.hospital.web"/>
+    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <!--配置拦截器，多个拦截器时，顺序执行-->
+        <mvc:interceptor>
+            <!--要拦截的具体的方法-->
+            <mvc:mapping path="/user/admin"/>
+            <bean class="com.ming.hospital.Interceptor.MyInterceptor01"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <!--要拦截的具体的方法-->
+            <mvc:mapping path="/appointment/**"/>
+            <bean class="com.ming.hospital.Interceptor.MyInterceptor02"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
+        <property name="prefix" value="/" />
+        <property name="suffix" value=".jsp"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    </bean>
+
+</beans>

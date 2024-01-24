@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ming.hospital.dao.HospitalMapper" >
+  <resultMap id="BaseResultMap" type="com.ming.hospital.pojo.Hospital" >
+    <id column="hid" property="hid" jdbcType="BIGINT" />
+    <result column="hname" property="hname" jdbcType="VARCHAR" />
+    <result column="hphone" property="hphone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="REAL" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="times" property="times" jdbcType="INTEGER" />
+  </resultMap>
+
+
+  <select  resultType="com.ming.hospital.pojo.Hospital" id ="getListByTop3">
+    select * from hospital order by score;
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ming.hospital.pojo.Hospital" >
+    select * from hospital order by score;
+</select>
+</mapper>
